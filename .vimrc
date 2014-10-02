@@ -12,6 +12,7 @@ set shiftwidth=2
 set noexpandtab
 set smarttab
 set autochdir
+set nowrap
 
 match ErrorMsg '\%>80v.\+'
 
@@ -30,6 +31,8 @@ set hlsearch
 " Makes search act like search in modern browsers
 set incsearch
 
+"This unsets the "last search pattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
 
 " Show matching brackets when text indicator is over them
 set showmatch
@@ -60,3 +63,19 @@ autocmd BufReadPost *
      \ endif
 " Remember info about open buffers on close
 set viminfo^=%
+
+function! SelectaCommand(choice_command, selecta_args, vim_command)
+  try
+    silent let selection = system(a:choice_command . " | selecta " . a:selecta_args)
+  catch /Vim:Interrupt/
+    " Swallow the ^C so that the redraw below happens; otherwise there will be
+    " leftovers from selecta on the screen
+    redraw!
+    return
+  endtry
+  redraw!
+  exec a:vim_command . " " . selection
+endfunction
+
+nnoremap <leader>p :call SelectaCommand("find * -type f", "", ":e")<cr>
+
