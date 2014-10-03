@@ -1,3 +1,0 @@
-[submodule "bundle/vim-gotham"]
-	path = bundle/vim-gotham
-	url = https://github.com/whatyouhide/vim-gotham.git
