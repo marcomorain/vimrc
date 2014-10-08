@@ -9,13 +9,20 @@ set laststatus=2
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-set noexpandtab
+set expandtab
 set smarttab
-set autochdir
 set nowrap
 
+" Space to insert a single character
+nmap <space> i <esc>r
+
+" Show red after coloum 80
 match ErrorMsg '\%>80v.\+'
 
+" CTRL S Save
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
+imap <c-s> <Esc><c-s>
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -84,4 +91,4 @@ endfunction
 nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
 
 set background=dark
-colorscheme gotham
+colorscheme harlequin
