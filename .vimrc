@@ -58,6 +58,13 @@ set encoding=utf8
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
+" From tpope/vim-markdown
+" One difference between this repository and the upstream files in Vim is that
+" the former forces *.md as Markdown, while the latter detects it as Modula-2,
+" with an exception for README.md. If you'd like to force Markdown without
+" installing from this repository, add the following to your vimrc
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
