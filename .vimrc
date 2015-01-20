@@ -12,6 +12,14 @@ set shiftwidth=2
 set expandtab
 set smarttab
 set nowrap
+set scrolloff=2                   " minimum lines above/below cursor
+set timeoutlen=2000
+set clipboard=unnamed             " use the system clipboard
+set relativenumber                " show relative line numbers
+set list listchars=tab:»·,trail:· " show extra space characters
+
+" Use comma as the leader
+let mapleader=","
 
 " Space to insert a single character
 nmap <space> i <esc>r
@@ -19,10 +27,25 @@ nmap <space> i <esc>r
 " Show red after coloum 80
 match ErrorMsg '\%>80v.\+'
 
+" Ctrl G - git grep current word
+map <c-g> :Ggrep <cword><kEnter>
+
+" Programming Keys:
+"   F9  = Make
+"   F10 = Next Error
+"   F11 = Prev Error
+inoremap <F9> <Esc>:make<CR>
+inoremap <F10> <Esc>:cnext<CR>
+inoremap <F11> <Esc>:cprev<CR>
+noremap <F9> <Esc>:make<CR>
+noremap <F10> <Esc>:cnext<CR>
+noremap <F11> <Esc>:cprev<CR>
+
 " CTRL S Save
-nmap <c-s> :w<CR>
-imap <c-s> <Esc>:w<CR>a
-imap <c-s> <Esc><c-s>
+"Works in normal mode, must press Esc first
+map <c-s> :w<kEnter>
+"Works in insert mode, saves and puts back in insert mode
+imap <c-s> <Esc>:w<kEnter>i
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -95,7 +118,7 @@ endfunction
 
 " Find all files in all non-dot directories starting in the working directory.
 " Fuzzy select one of those. Open the selected file with :e.
-nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
+nnoremap <leader>f :call SelectaCommand("git ls-files", "", ":e")<cr>
 
 set background=dark
 colorscheme harlequin
