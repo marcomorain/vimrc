@@ -28,7 +28,9 @@ nmap <space> i <esc>r
 match ErrorMsg '\%>80v.\+'
 
 " Ctrl G - git grep current word
-map <c-g> :Ggrep <cword><kEnter>
+map <c-g> :Ag <cword><kEnter>
+
+nmap cr :Connect nrepl://localhost:6005 ~/dev/circle<cr>
 
 " Programming Keys:
 "   F9  = Make
@@ -119,6 +121,14 @@ endfunction
 " Find all files in all non-dot directories starting in the working directory.
 " Fuzzy select one of those. Open the selected file with :e.
 nnoremap <leader>f :call SelectaCommand("git ls-files", "", ":e")<cr>
+
+function! SelectaBuffer()
+  let buffers = map(range(1, bufnr("$")), 'bufname(bufnr(v:val))')
+  call SelectaCommand('echo "' . join(buffers, "\n") . '"', "", ":b")
+endfunction
+
+" Fuzzy select a buffer. Open the selected buffer with :b.
+nnoremap <leader>b :call SelectaBuffer()<cr>
 
 set background=dark
 colorscheme harlequin
