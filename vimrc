@@ -12,8 +12,8 @@ Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-fugitive'
 Plugin 'marcomorain/vim-colorschemes'
 Plugin 'groenewege/vim-less'
-Plugin 'rust-lang/rust.vim'
 Plugin 'vim-scripts/paredit.vim'
+Plugin 'vim-airline/vim-airline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -47,7 +47,7 @@ match ErrorMsg '\%>80v.\+'
 " Ctrl G - git grep current word
 map <c-g> :Ggrep <cword><kEnter>
 
-nmap cr :Connect nrepl://localhost:6005 ~/dev/circle<cr>
+nmap cr :Connect nrepl://dev.circlehost:6005 ~/dev/circleci/circle<cr>
 
 " Programming Keys:
 "   F9  = Make
@@ -85,6 +85,9 @@ set incsearch
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
+" Make smartindent stop outdenting lines beginning with #
+inoremap # X#
+
 " Show matching brackets when text indicator is over them
 set showmatch
 " How many tenths of a second to blink when matching brackets
@@ -107,10 +110,11 @@ autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 " the former forces *.md as Markdown, while the latter detects it as Modula-2,
 " with an exception for README.md. If you'd like to force Markdown without
 " installing from this repository, add the following to your vimrc
-autocmd BufNewFile,BufRead *.md   set filetype=markdown
+autocmd BufNewFile,BufRead *.md     set filetype=markdown
+autocmd BufNewFile,BufRead Fastfile set filetype=ruby
 autocmd BufNewFile,BufRead *.cljs set filetype=clojure
 autocmd BufNewFile,BufRead *.edn  set filetype=clojure
-
+autocmd FileType markdown,plaintex,tex,text setlocal textwidth=78
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
